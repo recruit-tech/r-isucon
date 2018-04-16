@@ -1,0 +1,5 @@
+terraform/base/.terraform
+ansible/.vagrant
+terraform/credential
+*.retry
+ansible.log

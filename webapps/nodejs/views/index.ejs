@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('meta') %>
+  </head>
+  <body>
+    <%- include('header', { user }) %>
+    <div class="container">
+    <h1>りすこん会議室予約システム</h1>
+    <form method="GET">
+      <div class="form-group">
+        <label for="date">日付</label>
+        <input type="date" name="date" id="date" class="form-control" value=<%=date%> />
+        <input type="submit" class="btn btn-primary" />
+      </div>
+    </form>
+    <table>
+      <tbody>
+        <tr>
+          <th>rooms</th>
+        <% times.forEach((time) => { %>
+          <th>
+            <%= time.start_time %>
+          </th>
+        <% }) %>
+        </tr>
+        <% rooms.forEach((room) => { %>
+        <tr>
+          <td><%= room.name %></td>
+          <% room.times.forEach((time) => { %>
+            <% const myReserve = time.reservation && time.reservation.username === user.username %>
+            <% const otherReserve = time.reservation && time.reservation.username !== user.username%>
+            <% if(myReserve) {  %>
+              <td colspan=<%= time.colspan %> class="active" data-start="<%= time.reservation.start_time %>" data-end="<%= time.reservation.end_time %>" data-room-id="<%= room.name %>">
+                <a href="/reservations/<%= time.reservation.id %>"><%= time.reservation.title %></a> by
+                <a href="/users/<%=time.reservation.username%>"><%= time.reservation.username %>
+                  <picture>
+                    <img src="/dx/25/dy/25/<%=time.reservation.user.icon%>" class="img-circle" width=25 height=25 />
+                  </picture>
+                </a>
+              </td>
+            <% } else if (otherReserve) { %>
+              <td colspan=<%= time.colspan %> class="inactive" data-start="<%= time.reservation.start_time %>" data-end="<%= time.reservation.end_time %>" data-room-id="<%= room.name %>">
+                <%= time.reservation.title %> by
+                <a href="/users/<%=time.reservation.username%>"><%= time.reservation.username %>
+                  <picture>
+                    <img src="/dx/25/dy/25/<%=time.reservation.user.icon%>"  class="img-circle" width=25 height=25  />
+                  </picture>
+                </a>
+              </td>
+            <% } else { %>
+              <td class="center">
+                <a href="/reservations/?room_id=<%= room.id %>&start=<%= time.start_time %>&date=<%= date %>">◯</a>
+              </td>
+            <% } %>
+          <% }) %>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>

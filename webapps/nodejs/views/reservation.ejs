@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('meta') %>
+  </head>
+  <body>
+    <%- include('header', { user }) %>
+    <div class="container">
+    <h1>会議室予約画面</h1>
+    <% if (message) { %>
+    <p><%= message %></p>
+    <% } %>
+    <form method="POST">
+      <div class="form-group">
+        <label>ルーム</label>
+        <div>
+        <select name="room_id" class="form-control">
+        <% reservableRooms.forEach((room) => { %>
+          <label><option value="<%= room.id %>" <%= room.id === +room_id && "selected" %>><%= room.name %></option></label>
+        <% }) %>
+        </select>
+        </div>
+        <div>
+        <label for="date">日付</label>
+        <input type="date" name="date" value="<%= date %>" id="date" class="form-control" />
+        </div>
+        <div>
+        <label for="title">会議タイトル</label>
+        <input type="text" name="title" value="<%= title %>" id="title" class="form-control" />
+        </div>
+        <div>
+        <label>開始時刻</label>
+        <select name="start" class="form-control">
+          <% rangeTime.forEach((time) => { %>
+          <label><option value="<%= time.start_time %>" <%= time.start_time === start && "selected" %>><%= time.start_time %></option></label>
+          <% }) %>
+        </select>
+        </div>
+        <div>
+        <label>終了時刻</label>
+        <select name="end" class="form-control">
+          <% rangeTime.forEach((time) => { %>
+          <label><option value="<%= time.end_time %>" <%= time.end_time === end && "selected" %>><%= time.end_time %></option></label>
+          <% }) %>
+        </select>
+        </div>
+        <div><input type="submit" class="btn btn-primary" /></div>
+    </form>
+  </div>
+  </body>
+</html>
+

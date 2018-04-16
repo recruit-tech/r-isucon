@@ -1,0 +1,33 @@
+.badge__jobqueue.mdl-badge[data-badge]:after {
+  background: rgb(63,81,181);
+}
+
+.button-left {
+  margin-right: 4px;
+}
+
+.button-right {
+  margin-left: 4px;
+}
+
+.running, .waiting {
+  cursor: auto;
+}
+
+.running {
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  50%{
+    opacity: .2;
+  }
+}
+
+.countdown .mdl-card__supporting-text {
+  font-size: 1.5rem;
+}
+
+.countdown .mdl-card__supporting-text .message {
+  padding-top: 8px;
+}

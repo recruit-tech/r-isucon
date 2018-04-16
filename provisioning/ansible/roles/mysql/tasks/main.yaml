@@ -1,0 +1,53 @@
+---
+- name: mysqlのrpm install
+  yum:
+    name: https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+    state: present
+
+- name: mysql-serverのinstall
+  yum:
+    name: mysql-community-server
+    state: present
+
+- name: mysqld started
+  systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: get initial root password
+  shell: grep "temporary password" /var/log/mysqld.log | awk '{print $NF}'
+  register: default_root_password
+
+- name: change password validation to the easy way
+  shell: |
+    mysql -u root -p'{{ default_root_password.stdout }}' --connect-expired-password -e "SET GLOBAL validate_password_length=4;"
+    mysql -u root -p'{{ default_root_password.stdout }}' --connect-expired-password -e "SET GLOBAL validate_password_policy=LOW;"
+
+- name: change root user password
+  shell: |
+    mysql -u root -p'{{ default_root_password.stdout }}' --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';"
+
+- name: root アカウントのパスワードを設定
+  mysql_user:
+    login_user: root
+    login_password: "password"
+    host: localhost
+    name: isucon
+    password: password
+    priv: '*.*:ALL'
+    state: present
+
+- name: deploy my.cnf
+  copy:
+    src: "my.cnf"
+    dest: "/etc/my.cnf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: mysqld started
+  systemd:
+    name: mysqld
+    state: restarted
+    enabled: yes

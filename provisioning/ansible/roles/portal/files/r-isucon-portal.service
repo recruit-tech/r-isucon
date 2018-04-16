@@ -1,0 +1,13 @@
+[Unit]
+Description=r-isucon portal yahoo japan isucon portal server
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/environment
+WorkingDirectory=/home/isucon/r-isucon/portal
+ExecStart=/usr/bin/node /home/isucon/r-isucon/portal/dist/server/index.js
+Restart=always
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+{{ define "login" }}
+<!DOCTYPE html>
+<html>
+<head>
+{{- template "meta" . -}}
+</head>
+<body>
+{{- template "header" . -}}
+<div class="container">
+<h1>ログイン</h1>
+{{- if .Message -}}
+<p>{{ .Message }}</p>
+{{- end -}}
+<form method="POST">
+    <div class="form-group">
+        <label for="username">ユーザー名</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="hogehoge" />
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="passwd" />
+        <div><input type="submit" class="btn btn-primary" /></div>
+    </div>
+</form>
+</div>
+</body>
+</html>
+{{ end }}

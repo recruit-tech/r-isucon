@@ -1,0 +1,39 @@
+- name: node.js | binary | Make sure that the directory to hold the node.js binaries exists
+  file:
+    path: "/usr/nodejs"
+    state: directory
+    recurse: yes
+    mode: 0755
+
+- name: download nodejs
+  get_url:
+    url: "https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz"
+    # checksum: {{ nodejs_checksum }}
+    dest: "/tmp/node-{{ nodejs_version }}-linux-x64.tar.xz"
+
+- name: unarchive a nodejs
+  unarchive:
+    src: "/tmp/node-{{ nodejs_version }}-linux-x64.tar.xz"
+    dest: "/usr/nodejs"
+    remote_src: True
+
+- name: change mode and owner
+  file:
+    path: "/usr/nodejs/node-{{ nodejs_version }}-linux-x64"
+    owner: root
+    group: root
+
+- name: crate symbolic link
+  file:
+    src: "/usr/nodejs/node-{{ nodejs_version }}-linux-x64"
+    dest: "/usr/local/nodejs"
+    state: link
+
+- name: node.js | Inform the system where the binaries are located and set as the default
+  alternatives:
+    name: "{{ item }}"
+    path: "/usr/local/nodejs/bin/{{ item }}"
+    link: "/usr/bin/{{ item }}"
+  with_items:
+    - node
+    - npm

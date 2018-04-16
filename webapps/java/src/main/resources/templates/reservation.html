@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <head th:include="meta :: heads"></head>
+  </head>
+  <body>
+    <header th:replace="header :: headers"></header>
+    <div class="container">
+    <h1>会議室予約画面</h1>
+    <p th:if="${message!=null}" th:text="${message}"></p>
+    <form method="POST">
+      <div class="form-group">
+        <label>ルーム</label>
+        <div>
+        <select name="room_id" class="form-control">
+        <th:block th:each="room:${reservableRooms}">
+          <label><option th:value="${room.id}" th:selected="${room.id==roomId}" th:text="${room.name}"></option></label>
+        </th:block>
+        </select>
+        </div>
+        <div>
+        <label for="date">日付</label>
+        <input type="date" name="date" th:value="${date}" id="date" class="form-control" />
+        </div>
+        <div>
+        <label for="title">会議タイトル</label>
+        <input type="text" name="title" th:value="${title}" id="title" class="form-control" />
+        </div>
+        <div>
+        <label>開始時刻</label>
+        <select name="start" class="form-control">
+          <th:block th:each="time:${rangeTime}">
+          <label><option th:value="${time.startTime}" th:selected="${time.startTime==start}" th:text="${time.startTime}"></option></label>
+          </th:block>
+        </select>
+        </div>
+        <div>
+        <label>終了時刻</label>
+        <select name="end" class="form-control">
+          <th:block th:each="time:${rangeTime}">
+          <label><option th:value="${time.endTime}" th:selected="${time.endTime==end}" th:text="${time.endTime}"></option></label>
+          </th:block>
+        </select>
+        </div>
+        <div><input type="submit" class="btn btn-primary" /></div>
+  </div>
+  </form>
+  </div>
+  </body>
+</html>
+

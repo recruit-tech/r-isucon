@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head th:include="meta :: heads"></head>
+  <body>
+    <header th:replace="header :: headers"></header>
+    <div class="container">
+    <h1>登録</h1>
+    <p th:if="${message!=null}" th:text="${message}"></p>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="username">ユーザー名</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="hogehoge" />
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="passwd" />
+        <label for="last_name">氏</label>
+        <input type="text" name="last_name" id="last_name" class="form-control" />
+        <label for="first_name">名</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" />
+        <label for="icon">アイコン</label>
+        <input type="file" name="icon" id="icon" class="form-control" />
+        <div class="checkbox">所属組織</div>
+        <label th:each="organization: ${organizations}" th:inline="text">
+            <input type="checkbox" name="organization" th:value="${organization.id}"/>
+            [[${organization.name}]]
+        </label>
+        <div><input type="submit" class="btn btn-primary" /></div>
+      </div>
+    </form>
+    </div>
+  </body>
+</html>

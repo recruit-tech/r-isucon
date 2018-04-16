@@ -1,0 +1,23 @@
+{
+  "provisioners": [{
+    "type": "ansible",
+    "playbook_file": "./ansible/setup-portal.yaml"
+  }],
+
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "ap-northeast-1",
+    "ssh_proxy_host": "localhost",
+    "ssh_proxy_port": "8443",
+    "instance_type": "t2.medium",
+    "ssh_username": "centos",
+    "source_ami": "ami-25bd2743",
+    "ami_name": "<AMI_NAME>",
+    "launch_block_device_mappings": [{
+      "device_name": "/dev/sda1",
+      "volume_size": 100,
+      "volume_type": "standard",
+      "delete_on_termination": true
+    }]
+  }]
+}

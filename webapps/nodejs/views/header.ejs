@@ -1,0 +1,25 @@
+<header class="navbar navbar-static-top">
+  <div class="container">
+  <div class="navbar-header">
+    <button class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+  <a href="/" class="navbar-brand">りすこん会議室予約</a>
+  <nav class="collapse navbar-collapse">
+  </div>
+  <ul class="nav navbar-nav">
+    <% if (!user) { %>
+    <li><a href="/register">ユーザー登録</a></li>
+    <li><a href="/login">ログイン</a></li>
+    <% } %>
+    <% if (user) { %>
+    <li><a href="/logout">ログアウト</a></li>
+    <% } %>
+  </ul>
+  <% if (user) { %>
+  <ul class="nav navbar-nav navbar-right">
+  <a href="/users/<%=user.username%>"><%= user.last_name %> <% user.first_name %> さん</a>
+  <img src="/dx/50/dy/50/<%=user.icon%>" class="img-rounded" width=50 height=50 />
+  </ul>
+  <% } %>
+  </nav>
+  </div>
+</header>

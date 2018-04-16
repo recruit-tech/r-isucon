@@ -1,0 +1,137 @@
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp countdown"
+*ngIf="displayCountDown()">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">R-ISUCON終了まで</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <ng-container>
+      <span class="days">{{ remain.days }}</span>日
+      <span class="hours">{{ remain.hours }}</span>時間
+      <span class="minutes">{{ remain.minutes }}</span>分
+      <span class="seconds">{{ remain.seconds }}</span>秒
+    </ng-container>
+    <ng-container *ngIf="!isInSession">
+      <div class="message">R-ISUCONは終了しました。</div>
+    </ng-container>
+  </div>
+</section>
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">ベンチマーク</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    自分のチームのキューは青く表示され、実行中のキューは点滅します。
+  </div>
+
+  <div class="mdl-card__supporting-text">
+    <ng-container *ngFor="let q of queues.running">
+    <button class="running mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" [class.mdl-button--primary]="q.self" [title]="q.team_name">{{ q.team_name.slice(0, 1) }}</button>
+    </ng-container>
+    <ng-container *ngFor="let q of queues.waiting">
+    <button class="waiting mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" [class.mdl-button--primary]="q.self" [title]="q.team_name">{{ q.team_name.slice(0, 1) }}</button>
+    </ng-container>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <button class="button-left mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+    (click)="onClickRunBenchmarker()" [disabled]="disabledRunBenchmarker">
+      Run Benchmarker
+    </button>
+
+    <button class="button-right mdl-button mdl-js-button mdl-js-ripple-effect"
+    (click)="onClickAddApplicationServer()" [disabled]="!isLoggedIn">
+      Add Application Server
+    </button>
+  </div>
+</section>
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">各チームのスコア</h2>
+  </div>
+  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+    <ng-c3 [options]="splineOptions"></ng-c3>
+  </div>
+
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">トップスコア</h2>
+  </div>
+  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+    <ng-c3 [options]="barOptions"></ng-c3>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <a routerLink="/teams">
+      <button class="button-application mdl-button mdl-js-button mdl-js-ripple-effect">
+        View TeamList
+      </button>
+    </a>
+  </div>
+</section>
+
+<section *ngIf="isLoggedIn" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">チームスコア</h2>
+  </div>
+
+  <ng-container *ngIf="scores">
+  <table class="table--fixed mdl-data-table mdl-js-data-table">
+    <thead>
+    <tr>
+      <th class="data-table__cell-date mdl-data-table__cell--non-numeric">時刻</th>
+      <th class="data-table__cell-score mdl-data-table__cell">スコア</th>
+      <th class="data-table__cell-message mdl-data-table__cell--non-numeric">メッセージ</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <tr *ngFor="let score of scores">
+      <td class="data-table__cell-date mdl-data-table__cell--non-numeric">{{ score.localeDate }}</td>
+      <td class="data-table__cell-score mdl-data-table__cell">{{ score.score }}</td>
+      <td class="data-table__cell-message mdl-data-table__cell--non-numeric">{{ score.message }}</td>
+    </tr>
+    </tbody>
+  </table>
+  </ng-container>
+
+  <ng-container *ngIf="!scores">
+    <div class="mdl-card__supporting-text">
+    チームのスコアはまだありません。
+    </div>
+  </ng-container>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <button class="button-application mdl-button mdl-js-button mdl-js-ripple-effect"
+            (click)="onClickTeamInfo()">
+      View More Team Score
+    </button>
+  </div>
+</section>
+
+
+<dialog appDialog class="mdl-dialog" #dialogRelogin>
+  <div class="mdl-dialog__content">
+    <p>
+      チームの認証に失敗しました。<br>
+      再ログインを行ってください。
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="onClickReLogin()">再ログイン</button>
+    <button type="button" class="mdl-button" (click)="dialogRelogin.close()">close</button>
+  </div>
+</dialog>
+
+<dialog appDialog class="mdl-dialog" #dialogFlavor>
+  <div class="mdl-dialog__content">
+    <p>
+      ベンチマークキューの登録に失敗しました。<br>
+      規定のフレーバーではないサーバがホスト名に登録されています。
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button" (click)="dialogFlavor.close()">close</button>
+  </div>
+</dialog>

@@ -1,0 +1,66 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html>
+    <head>
+        {{- template "meta" . -}}
+    </head>
+    <body>
+    {{- template "header" . -}}
+    {{ $Date := .Date }}
+    {{ $User := .User }}
+    <div class="container">
+        <h1>りすこん会議室予約システム</h1>
+        <form method="GET">
+            <div class="form-group">
+                <label for="date">日付</label>
+                <input type="date" name="date" id="date" class="form-control" value={{.Date}} />
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </form>
+        <table>
+            <tbody>
+            <tr>
+                <th>rooms</th>
+                {{ range .Times }}
+                <th>
+                    {{ .StartTime }}
+                </th>
+                {{ end }}
+            </tr>
+            {{ range .Rooms }}
+            <tr>
+                <td>{{ .Room.Name }}</td>
+                {{ $Room := .Room }}
+                {{ range .Time }}
+                  {{ if eq .Reservation.ID 0 }}
+                      <td class="center">
+                          <a href="/reservations?room_id={{ $Room.ID }}&start={{ .StartTime }}&date={{ $Date }}">◯</a>
+                      </td>
+                  {{ else if eq .Reservation.Username $User.Username }}
+                      <td colspan={{ .Colspan }} class="active" data-start="{{ .Reservation.StartTime }}" data-end="{{ .Reservation.EndTime }}" data-room-id="{{ $Room.Name }}">
+                          <a href="/reservations/{{ .Reservation.ID }}">{{ .Reservation.Title }}</a> by
+                          <a href="/users/{{ .Reservation.Username }}">{{ .Reservation.Username }}
+                              <picture>
+                                  <img src="/dx/25/dy/25/{{ .Reservation.User.Icon}}" class="img-circle" width=25 height=25 />
+                              </picture>
+                          </a>
+                      </td>
+                  {{ else }}
+                      <td colspan={{ .Colspan }} class="inactive" data-start="{{ .Reservation.StartTime }}" data-end="{{ .Reservation.EndTime }}" data-room-id="{{ $Room.Name }}">
+                          {{ .Reservation.Title }} by
+                          <a href="/users/{{ .Reservation.Username }}">{{ .Reservation.Username }}
+                              <picture>
+                                  <img src="/dx/25/dy/25/{{ .Reservation.User.Icon}}" class="img-circle" width=25 height=25 />
+                              </picture>
+                          </a>
+                      </td>
+                  {{ end }}
+                {{ end }}
+            </tr>
+            {{ end }}
+            </tbody>
+        </table>
+    </div>
+    </body>
+</html>
+{{ end }}

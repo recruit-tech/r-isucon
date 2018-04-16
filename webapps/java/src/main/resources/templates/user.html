@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head th:include="meta :: heads"></head>
+  <body>
+    <header th:replace="header :: headers"></header>
+    <div class="container">
+    <p th:if="${message!=null}" th:text="${message}"></p>
+    <form th:if="${ismine}" method="POST" enctype="multipart/form-data" action="/users">
+      <div class="form-group">
+        <label for="last_name">氏</label>
+        <input type="text" name="last_name" id="last_name" class="form-control" th:value="${lastName}" />
+        <label for="first_name">名</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" th:value="${firstName}" />
+        <label for="icon">アイコン</label>
+        <input type="file" name="icon" id="icon" class="form-control" />
+        <div class="checkbox">所属組織</div>
+        <th:block th:if="${organizations!=null}" th:each="organization:${organizations}">
+          <label th:inline="text">
+            <input type="checkbox" name="organization" th:value="${organization.id}" th:checked="${lambda.check(belongOrgs,organization.id)}"/>
+            [[${organization.name}]]
+          </label>
+        </th:block>
+        <div><input type="submit" class="btn btn-primary" /></div>
+      </div>
+    </form>
+    <div th:if="${!ismine}">
+      <div th:text="${user.lastName}"></div>
+      <div th:text="${user.firstName}"></div>
+      <div><img th:src="'/dx/300/dy/300/'+${user.icon}" width="300" height="300" /></div>
+    </div>
+    </div>
+  </body>
+</html>

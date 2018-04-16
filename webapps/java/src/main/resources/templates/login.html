@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head th:include="meta :: heads"></head>
+  <body>
+    <header th:replace="header :: headers"></header>
+    <div class="container">
+    <h1>ログイン</h1>
+    <p th:if="${message!=null}" th:text="${message}"></p>
+    <form method="POST">
+      <div class="form-group">
+        <label for="username">ユーザー名</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="hogehoge" />
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="passwd" />
+        <div><input type="submit" class="btn btn-primary" /></div>
+      </div>
+    </form>
+  </div>
+  </body>
+</html>
+

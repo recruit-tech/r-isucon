@@ -1,0 +1,58 @@
+<section *ngIf="exists()" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">{{ team.name }}</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <ul class="mdl-list">
+      <li class="mdl-list__item mdl-list__item--two-line" *ngFor="let member of team.members">
+        <span class="mdl-list__item-primary-content">
+          <i class="mdl-list__item-avatar">
+            <img width="40px" src="{{ member.icon }}" />
+          </i>
+          <span>{{ member.name }}</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="isOwnTeam()" class="mdl-card__actions mdl-card--border">
+    <a routerLink="edit">
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+        Edit info
+      </button>
+    </a>
+  </div>
+</section>
+
+<section *ngIf="exists()" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">スコアの推移</h2>
+  </div>
+  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+    <ng-c3 [options]="graphOptions"></ng-c3>
+  </div>
+</section>
+
+<section *ngIf="isOwnTeam()" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">チームスコア</h2>
+  </div>
+
+  <table class="table--fixed mdl-data-table mdl-js-data-table">
+    <thead>
+    <tr>
+      <th class="data-table__cell-date mdl-data-table__cell--non-numeric">時刻</th>
+      <th class="data-table__cell-score mdl-data-table__cell">スコア</th>
+      <th class="data-table__cell-message mdl-data-table__cell--non-numeric">メッセージ</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let score of scores">
+      <td class="data-table__cell-date mdl-data-table__cell--non-numeric">{{ score.localeDate }}</td>
+      <td class="data-table__cell-score mdl-data-table__cell">{{ score.score }}</td>
+      <td class="data-table__cell-message mdl-data-table__cell--non-numeric">{{ score.message }}</td>
+    </tr>
+    </tbody>
+  </table>
+</section>

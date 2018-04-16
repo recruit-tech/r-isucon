@@ -1,0 +1,14 @@
+[Unit]
+Description=r-isucon benchmarker
+
+[Service]
+Type=simple
+Nice=-20
+EnvironmentFile=/home/isucon/env.sh
+WorkingDirectory=/home/isucon/go/src/github.com/orisano/r-isucon/bench
+ExecStart=/home/isucon/go/src/github.com/orisano/r-isucon/bench/bin/worker
+Restart=always
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

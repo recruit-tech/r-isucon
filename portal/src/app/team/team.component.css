@@ -1,0 +1,31 @@
+.mdl-card__supporting-text {
+  margin: 16px 16px;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0;
+}
+
+
+section .section__circle-container > .section__circle-container__circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  margin: 8px 0;
+}
+
+section .section__text {
+  padding: 8px 0 0 0;
+}
+
+section .section__text:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,.13);
+}
+
+section .section__text > h5 {
+  margin: 0 0 0.5em 0;
+}
+
+.mdl-list__item-avatar {
+  background: none;
+}

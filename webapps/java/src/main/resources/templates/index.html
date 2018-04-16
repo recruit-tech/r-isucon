@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head th:include="meta :: heads"></head>
+  <body>
+    <header th:replace="header :: headers"></header>
+    <div class="container">
+    <h1>りすこん会議室予約システム</h1>
+    <form method="GET">
+      <div class="form-group">
+        <label for="date">日付</label>
+        <input type="date" name="date" id="date" class="form-control" th:value="${date}" />
+        <input type="submit" class="btn btn-primary" />
+      </div>
+    </form>
+    <table>
+      <tbody>
+        <tr>
+          <th>rooms</th>
+          <th th:each="time:${times}" th:inline="text">
+            [[${time.startTime}]]
+          </th>
+        </tr>
+        <tr th:each="room:${rooms}">
+          <td th:text="${room.name}"></td>
+          <th:block th:each="time:${room.rangeTime}"  th:colspan="${time.colspan}">
+              <td th:if="${time.extendsReservation!=null and time.extendsReservation.username==user.username}" th:colspan="${time.colspan}"  class="active" th:attr="data-start=${time.extendsReservation.startTime},data-end=${time.extendsReservation.endTime},data-room-id=${room.name}">
+                <a th:href="'/reservations/'+${time.extendsReservation.id}" th:text="${time.extendsReservation.title}"></a> by
+                <a th:href="'/users/'+${time.extendsReservation.username}" th:inline="text">[[${time.extendsReservation.username}]]
+                  <picture>
+                    <img th:src="'/dx/25/dy/25/'+${time.extendsReservation.users.icon}" class="img-circle" width="25" height="25" />
+                  </picture>
+                </a>
+              </td>
+            <td th:if="${time.extendsReservation!=null and time.extendsReservation.username!=user.username}" th:colspan="${time.colspan}"  class="inactive" th:inline="text" th:attr="data-start=${time.extendsReservation.startTime},data-end=${time.extendsReservation.endTime},data-room-id=${room.name}">
+                [[${time.extendsReservation.title}]] by
+                <a th:href="'/users/'+${time.extendsReservation.username}" th:inline="text">[[${time.extendsReservation.username}]]
+                  <picture>
+                    <img th:src="'/dx/25/dy/25/'+${time.extendsReservation.users.icon}"  class="img-circle" width="25" height="25"  />
+                  </picture>
+                </a>
+              </td>
+              <td th:if="${time.extendsReservation==null}" class="center">
+                <a th:href="'/reservations/?room_id='+ ${room.id}+'&amp;start='+${time.startTime}+'&amp;date='+${date}">◯</a>
+              </td>
+              </th:block>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>

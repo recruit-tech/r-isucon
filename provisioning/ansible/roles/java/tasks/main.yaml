@@ -1,0 +1,34 @@
+---
+
+- name: javaのinstall
+  yum:
+    name: java-1.8.0-openjdk-devel
+    state: present
+
+- name: create grade directory
+  file:
+    path: "/opt/gradle"
+    state: directory
+    recurse: yes
+    mode: 0755
+
+- name: download gradle
+  get_url:
+    url: "https://services.gradle.org/distributions/gradle-4.6-bin.zip"
+    dest: "/tmp/gradle-4.6-bin.zip"
+
+- name: unarchive a gradle
+  unarchive:
+    src: "/tmp/gradle-4.6-bin.zip"
+    dest: "/opt/gradle/"
+    remote_src: True
+
+- name: set env GRADLE_HOME
+  lineinfile:
+    dest: /etc/profile
+    line: export GRADLE_HOME=/opt/gradle/gradle-4.6
+
+- name: set env PATH
+  lineinfile:
+    dest: /etc/profile
+    line: export PATH=$GRADLE_HOME/bin:$PATH

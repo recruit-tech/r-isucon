@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('meta') %>
+  </head>
+  <body>
+    <%- include('header', { user }) %>
+    <div class="container">
+    <% if (message) { %>
+    <p><%= message %></p>
+    <% } %>
+    <% if (ismine) {%>
+    <form method="POST" enctype="multipart/form-data" action="/users">
+      <div class="form-group">
+        <label for="last_name">氏</label>
+        <input type="text" name="last_name" id="last_name" class="form-control" value="<%= last_name %>" />
+        <label for="first_name">名</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" value="<%= first_name %>" />
+        <label for="icon">アイコン</label>
+        <input type="file" name="icon" id="icon" class="form-control" />
+        <div class="checkbox">所属組織</div>
+        <% organizations && organizations.forEach((organization) => { %>
+          <label>
+            <input type="checkbox" name="organization" value=<%= organization.id %> <%= belongsOrgs.find((org) => org.id === organization.id ) && "checked" %>>
+            <%= organization.name %>
+          </label>
+        <% }) %>
+        <div><input type="submit" class="btn btn-primary" /></div>
+      </div>
+    </form>
+    <% } else { %>
+        <div>
+          <div><%= last_name %></div>
+          <div><%= first_name %></div>
+          <div><img src="/dx/300/dy/300/<%= icon %>" width="300" height="300"></div>
+        </div>
+    <% } %>
+    </div>
+  </body>
+</html>

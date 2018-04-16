@@ -1,0 +1,147 @@
+- name: get application
+  git:
+    repo: "https://int-tt:0dfd5565bf4f60be9c67341b9b4762ff5f39e375@github.com/orisano/r-isucon"
+    dest: /home/isucon/r-isucon
+
+- name: algon2 install
+  git:
+    repo: https://github.com/P-H-C/phc-winner-argon2.git
+    dest: /usr/argon2
+
+- name: make install argon2
+  make:
+    chdir: /usr/argon2
+    target: install
+
+#sudo ln -s /usr/lib/libargon2.so.1 /lib64/
+- name: create symbolic link
+  file:
+    src: "/usr/lib/libargon2.so.1"
+    dest: "/lib64/libargon2.so.1"
+    state: link
+
+- name: create database
+  mysql_db:
+    login_user: root
+    login_password: password
+    name: risukai
+
+- name: migration sql
+  shell: |
+    mysql -u root -ppassword risukai < /home/isucon/r-isucon/webapps/sql/01_tables_data.sql
+
+- name: deploy env.sh
+  copy:
+    src: "env.sh"
+    dest: "/home/isucon/env.sh"
+    owner: "isucon"
+    group: "isucon"
+    mode: "0644"
+
+#java app build
+- name: gradle build
+  shell: cd /home/isucon/r-isucon/webapps/java && sudo /opt/gradle/gradle-4.6/bin/gradle build
+
+- name: deploy service file
+  copy:
+    src: "r-isucon-java.service"
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+#node app build
+- name: npm install
+  shell: cd /home/isucon/r-isucon/webapps/nodejs && sudo npm install
+
+- name: deploy service file
+  copy:
+    src: "r-isucon-node.service"
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+#go app build
+
+#application setting
+#goの設定
+
+- name: change mode and owner
+  file:
+    path: "/home/isucon/go/src/github.com/orisano"
+    state: directory
+    recurse: yes
+    mode: 0755
+    owner: isucon
+    group: isucon
+
+- name: create symbolic link
+  file:
+    src: "/home/isucon/r-isucon"
+    dest: "/home/isucon/go/src/github.com/orisano/r-isucon"
+    state: link
+
+- name: change mode and owner for r-isucon
+  file:
+    path: "/home/isucon/"
+    owner: isucon
+    group: isucon
+    recurse: yes
+
+#TODO:シンボリックリンクが解決されてしまい、GOPATH配下と認識されなくなる
+- name: dep ensure
+  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/webapps/go && /home/isucon/go/bin/dep ensure
+  become: yes
+  become_user: isucon
+
+- name: build application
+  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/webapps/go && go build -o app
+  become: yes
+  become_user: isucon
+
+- name: delete files
+  file:
+    path: "/home/isucon/r-isucon/{{ item }}"
+    state: absent
+  with_items:
+    - ".git"
+    - "portal"
+    - "bench"
+    - "e2e"
+    - "middleware"
+    - "provisioning"
+    - ".gitignore"
+    - "terraform.tfvars"
+    - "docker-compose.yaml"
+    - "Makefile"
+    - "README.md"
+    - "webapps/nodejs/Dockerfile"
+    - "webapps/nodejs/README.md"
+    - "webapps/java/.DS_Store"
+
+    
+- name: deploy service file
+  copy:
+    src: "r-isucon-go.service"
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: change mode and owner for r-isucon
+  file:
+    path: "/home/isucon/r-isucon"
+    owner: isucon
+    group: isucon
+    recurse: yes
+
+- name: start r-sicuon-node
+  systemd:
+    daemon_reload: "yes"
+    name: "{{ item }}"
+    state: "started"
+    enabled: "yes"
+  with_items:
+  - "r-isucon-node.service"
+  - "nginx"

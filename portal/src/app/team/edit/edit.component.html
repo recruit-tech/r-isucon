@@ -1,0 +1,73 @@
+<section *ngIf="exists()" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">{{ team.name }}の編集</h2>
+  </div>
+
+  <div class="mdl-card__actions">
+    <form (ngSubmit)="onSubmit()" #teamForm="ngForm">
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="team-host"
+               [(ngModel)]="team.host" #teamHost="ngModel" name="teamHost" required>
+        <label class="mdl-textfield__label" for="team-host">アプリケーションのホスト名</label>
+        <span class="mdl-textfield__error" [hidden]="teamHost.valid || teamHost.pristine">を入力してください</span>
+      </div>
+
+      <div class="section__members">
+
+        <ng-container *ngIf="team.countFreeMembers() === 2">
+        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="team-member-2"
+                 [(ngModel)]="free[0]" #teamMember="ngModel" name="teamMember">
+          <label class="mdl-textfield__label" for="team-member-2">チームメンバー2(追加)</label>
+          <span class="mdl-textfield__error" [hidden]="teamMember.valid || teamMember.pristine">メンバーのアカウントIDを入力してください</span>
+        </div>
+        </ng-container>
+
+        <ng-container *ngIf="team.countFreeMembers() >= 1">
+        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="team-member-3"
+                 [(ngModel)]="free[1]" #teamMember="ngModel" name="teamMember">
+          <label class="mdl-textfield__label" for="team-member-3">チームメンバー3(追加)</label>
+          <span class="mdl-textfield__error" [hidden]="teamMember.valid || teamMember.pristine">メンバーのアカウントIDを入力してください</span>
+        </div>
+        </ng-container>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="team-lang"
+               [(ngModel)]="team.lang" #teamHost="ngModel" name="teamLang">
+        <label class="mdl-textfield__label" for="team-host">利用言語</label>
+      </div>
+
+      <button type="submit" class="mdl-cell mdl-cell--4-col mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+              [disabled]="!(teamForm.form.valid && enableSubmit)">
+        Done
+      </button>
+    </form>
+  </div>
+</section>
+
+<dialog appDialog class="mdl-dialog" #dialog>
+  <div class="mdl-dialog__content">
+    <p>
+      編集に失敗しました。<br>
+      ホスト名が登録されている、サーバが規定のフレーバーではない、もしくは追加メンバーが別チームに登録されています。
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button" (click)="dialog.close()">close</button>
+  </div>
+</dialog>
+
+<dialog appDialog class="mdl-dialog" #dialogRelogin>
+  <div class="mdl-dialog__content">
+    <p>
+      チームの認証に失敗しました。<br>
+      再ログインを行ってください。
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button mdl-button--raised mdl-button--colored" (click)="onClickReLogin()">再ログイン</button>
+    <button type="button" class="mdl-button" (click)="dialogRelogin.close()">close</button>
+  </div>
+</dialog>

@@ -1,0 +1,122 @@
+.mdl-layout__header-row > h4 {
+  margin-top: 16px;
+}
+
+.mdl-layout__header-row > h4 > img {
+  height: 65px;
+}
+
+.mdl-layout__drawer > .mdl-layout-title > img {
+  height: 80px;
+}
+
+.userinfo__content {
+  padding: 0 12px;
+}
+
+.page__content {
+  padding-top: 48px;
+}
+
+section.section--center {
+  max-width: 960px;
+  margin-bottom: 48px;
+}
+
+.external {
+  width: 25px;
+  vertical-align: top;
+}
+
+chart {
+  width: 100%;
+  height: 300px;
+}
+
+table {
+  border: none;
+}
+
+.table--fixed {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table th.data-table__cell-date {
+  width: 20%;
+}
+
+table th.data-table__cell-score {
+  width: 10%;
+}
+
+table th.data-table__cell-message {
+  width: 70%;
+}
+
+table td.data-table__cell-date {
+  vertical-align: top;
+}
+
+table td.data-table__cell-score {
+  vertical-align: top;
+}
+
+table td.data-table__cell-message {
+  word-wrap: break-word;
+  white-space: pre;
+  vertical-align: top;
+}
+
+.mdl-layout__header {
+  box-shadow: none;
+}
+
+.mdl-progress {
+  width: 100%;
+  height: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media screen and (max-width: 1024px) {
+  .mdl-layout--fixed-header > .mdl-progress {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.mdl-layout--fixed-drawer.is-upgraded:not(.is-small-screen) > .mdl-progress {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+}
+
+.mdl-progress.mdl-progress--indeterminate > .bar1,
+.mdl-progress.mdl-progress__indeterminate > .bar1 {
+  background-color: rgb(255, 64, 129);
+}
+
+.mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate) > .auxbar,
+.mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate) > .auxbar {
+  background-image: linear-gradient(to right, rgb(63, 81, 181), rgb(63, 81, 181)), linear-gradient(to right, rgb(63,81,181), rgb(63,81,181));
+}
+
+.mdl-progress:not(.mdl-progress--indeterminate) > .auxbar,
+.mdl-progress:not(.mdl-progress__indeterminate) > .auxbar {
+  background-image: linear-gradient(to right, rgb(63, 81, 181), rgb(63, 81, 181)), linear-gradient(to right, rgb(63,81,181), rgb(63,81,181));
+}
+
+.mdl-progress > .progressbar {
+  height: 4px;
+  background-color: rgb(255, 64, 129);
+}
+
+.mdl-progress > .bufferbar {
+  height: 4px;
+  background-image: linear-gradient(to right, rgb(63, 81, 181), rgb(63, 81, 181)), linear-gradient(to right, rgb(63,81,181), rgb(63,81,181));
+}
+
+.mdl-progress > .auxbar {
+  height: 4px;
+  background-image: linear-gradient(to right, rgb(63, 81, 181), rgb(63, 81, 181)), linear-gradient(to right, rgb(63,81,181), rgb(63,81,181));
+}

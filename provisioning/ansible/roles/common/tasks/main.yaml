@@ -1,0 +1,56 @@
+---
+## 色んなものをinstall
+- name: yum update -y
+  yum:
+    name: '*'
+    state: latest
+
+- name: disable selinux
+  selinux:
+    state: disabled
+
+- name: epel-releaseをinstall
+  yum:
+    name: epel-release
+    state: latest
+
+- name: 必要なパッケージをinstall
+  yum:
+    name:
+     - nginx
+     - wget 
+     - vim
+     - MySQL-python
+     - mailcap
+    state: latest
+
+- name: develop toolsのinstall
+  yum:
+    name: "@Development tools"
+    state: present
+
+- name: remi repositoryのinstall
+  yum:
+    name: http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+    state: present
+
+- name: install ImageMagick
+  yum:
+    name:
+      - ImageMagick7
+      - ImageMagick7-devel
+    state: latest
+    enablerepo: remi
+
+- name: add isucon user
+  user:
+    name: isucon
+    password: isucon
+    createhome: yes
+    shell: /bin/bash
+
+- name: allow isucon user to use sudo
+  lineinfile: 
+    dest: /etc/sudoers.d/isucon
+    create: yes
+    line: "isucon ALL=(ALL) NOPASSWD:ALL"

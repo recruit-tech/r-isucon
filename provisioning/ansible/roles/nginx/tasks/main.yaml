@@ -1,0 +1,31 @@
+---
+
+- name: deploy nginx.conf
+  copy:
+    src: "nginx.conf"
+    dest: "/etc/nginx/nginx.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: create ssl key directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    mode: 0755
+  with_items:
+    - "/etc/letsencrypt/live/r-isucon.blue/"
+    - "/etc/letsencrypt/live/r-isucon.blue/"
+
+- name: copy ssl keys
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/letsencrypt/live/r-isucon.blue/"
+    owner: "isucon"
+    group: "isucon"
+    mode: "0644"
+  with_items:
+    - "fullchain.pem"
+    - "privkey.pem"
+  

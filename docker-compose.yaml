@@ -1,0 +1,28 @@
+version: "3"
+services:
+    web:
+      build:
+        context: .
+        dockerfile: ./webapps/nodejs/Dockerfile
+      environment:
+        RISUCON_DB_HOST: mysql
+        RISUCON_DB_PASSWORD: password
+      depends_on:
+        - "mysql"
+      ports:
+        - "3000:3000"
+      links:
+        - "mysql"
+    mysql:
+      build:
+        context: .
+        dockerfile: ./middleware/mysql/Dockerfile
+      command: mysqld --character-set-server=utf8 --explicit_defaults_for_timestamp=1
+      volumes:
+        - "./middleware/tmp/mysql:/var/lib/mysql"
+      environment:
+        MYSQL_DATABASE: risukai
+        MYSQL_ROOT_PASSWORD: password
+        TZ: "Asia/Tokyo"
+      ports:
+        - "3306:3306"

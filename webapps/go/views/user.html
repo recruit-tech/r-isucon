@@ -1,0 +1,50 @@
+{{ define "user" }}
+<!DOCTYPE html>
+<html>
+<head>
+{{- template "meta" . -}}
+</head>
+<body>
+{{- template "header" . -}}
+<div class="container">
+{{- if .Message -}}
+    <p>{{ .Message }}</p>
+{{- end -}}
+{{ if .Mine }}
+    {{ $BelongsOrganizations := .BelongsOrganizations }}
+    <form method="POST" enctype="multipart/form-data" action="/users">
+        <div class="form-group">
+            <label for="last_name">氏</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{ .LastName }}" />
+            <label for="first_name">名</label>
+            <input type="text" name="first_name" id="first_name" class="form-control" value="{{ .FirstName }}" />
+            <label for="icon">アイコン</label>
+            <input type="file" name="icon" id="icon" class="form-control" />
+            <div class="checkbox">所属組織</div>
+        {{- range .Organizations -}}
+            <label>
+                <input type="checkbox" name="organization" value="{{.ID}}"
+                       {{ $OrgId := .ID }}
+                       {{ range $BelongsOrganizations }}
+                       {{ if eq .ID $OrgId }}
+                       checked
+                       {{ end }}
+                       {{ end }}
+                >
+            {{.Name}}
+            </label>
+        {{- end -}}
+            <div><input type="submit" class="btn btn-primary" /></div>
+        </div>
+    </form>
+{{ else }}
+        <div>
+            <div>{{ .LastName }}</div>
+            <div>{{ .FirstName }}</div>
+            <div><img src="/dx/300/dy/300/{{ .Icon }}" width="300" height="300"></div>
+        </div>
+{{ end }}
+</div>
+</body>
+</html>
+{{ end }}

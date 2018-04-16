@@ -1,0 +1,58 @@
+<div appMdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <h4><img src="/assets/logo-white.png"></h4>
+
+      <div class="mdl-layout-spacer"></div>
+
+      <div class="userinfo">
+        <span class="userinfo__content">{{ teamName ? 'チーム名: ' + teamName : '未ログイン' }}</span>
+      </div>
+    </div>
+  </header>
+  <ng-container *ngIf="isBrowser">
+  <div class="mdl-progress mdl-js-progress mdl-progress--indeterminate" #progress
+       [class.mdl-progress--indeterminate]="isIndeterminate"></div>
+  </ng-container>
+
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title"><img src="/assets/logo.png"></span>
+    <nav class="mdl-navigation">
+      <a routerLink="/home" class="mdl-navigation__link">ホーム</a>
+      <a routerLink="/teams" class="mdl-navigation__link">チーム一覧</a>
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/register" class="mdl-navigation__link">チーム登録</a>
+        <a routerLink="/login" class="mdl-navigation__link">ログイン</a>
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn">
+        <a *ngIf="teamId" [routerLink]="['teams', teamId, 'edit']" class="mdl-navigation__link">チーム編集</a>
+        <a class="mdl-navigation__link" (click)="logout()">ログアウト</a>
+      </ng-container>
+      <a href="https://gist.github.com/yosuke-furukawa/d7c7b64ab1d1dc5ee5e65a7f7f806ab7" target="_blank" class="mdl-navigation__link">
+        レギュレーション
+        <img class="external" src="https://s.yimg.jp/images/riff/3.10.0/images/icon/png/external_link.png">
+      </a>
+    </nav>
+  </div>
+
+  <main class="mdl-layout__content">
+    <div class="page__content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+
+<dialog appDialog class="mdl-dialog" #dialogRelogin>
+  <div class="mdl-dialog__content">
+    <p>
+      ログインセッションが切れています。<br>
+      再ログインを行ってください。
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <a routerLink="/login">
+    <button type="button" class="mdl-button mdl-button--raised mdl-button--colored">再ログイン</button>
+    </a>
+    <button type="button" class="mdl-button" (click)="logout(); dialogRelogin.close()">close</button>
+  </div>
+</dialog>

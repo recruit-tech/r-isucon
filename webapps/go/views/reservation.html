@@ -1,0 +1,55 @@
+{{ define "reservation" }}
+<!DOCTYPE html>
+<html>
+<head>
+{{- template "meta" . -}}
+</head>
+<body>
+{{- template "header" . -}}
+<div class="container">
+{{ $Start := .Start }}
+{{ $End := .End }}
+{{ $RoomId := .RoomId }}
+{{- if .Message -}}
+    <p>{{ .Message }}</p>
+{{- end -}}
+    <form method="POST">
+        <div class="form-group">
+            <label>ルーム</label>
+            <div>
+                <select name="room_id" class="form-control">
+                    {{ range .ReservableRooms }}
+                    <label><option value="{{ .ID }}" {{ if eq .ID $RoomId }} selected {{ end }}>{{ .Name }}</option></label>
+                    {{ end }}
+                </select>
+            </div>
+            <div>
+                <label for="date">日付</label>
+                <input type="date" name="date" value="{{ .Date }}" id="date" class="form-control" />
+            </div>
+            <div>
+                <label for="title">会議タイトル</label>
+                <input type="text" name="title" value="{{ .Title }}" id="title" class="form-control" />
+            </div>
+            <div>
+                <label>開始時刻</label>
+                <select name="start" class="form-control">
+                    {{ range .RangeTime }}
+                    <label><option value="{{ .StartTime }}" {{ if eq .StartTime $Start }} selected {{ end }}>{{ .StartTime }}</option></label>
+                    {{ end }}
+                </select>
+            </div>
+            <div>
+                <label>終了時刻</label>
+                <select name="end" class="form-control">
+                  {{ range .RangeTime }}
+                      <label><option value="{{ .EndTime }}" {{ if eq .EndTime $End }} selected {{ end }}>{{ .EndTime }}</option></label>
+                  {{ end }}
+                </select>
+            </div>
+            <div><input type="submit" class="btn btn-primary" /></div>
+    </form>
+</div>
+</body>
+</html>
+{{ end }}

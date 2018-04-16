@@ -1,0 +1,15 @@
+- hosts: all
+  vars:
+    nodejs_version: "v8.9.4"
+    mysql_password: "password"
+  become: yes
+  become_user: root
+  roles:
+    - role: common
+    - role: mysql
+    - role: nginx
+    - role: golang
+    - role: nodejs
+    - role: java
+    - role: web
+

@@ -1,0 +1,30 @@
+.table--fixed {
+  table-layout: fixed;
+  width: 100%;
+}
+
+ul.list--table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+ul.list--table li {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.list--nopadding {
+  padding: 0px;
+}
+
+.mdl-data-table {
+  border: none;
+}
+
+.mdl-card__menu {
+  position: relative;
+  right: 16px;
+  top: 16px;
+}

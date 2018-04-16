@@ -1,0 +1,16 @@
+[Unit]
+Description=r-isucon-java
+After=syslog.target
+
+[Service]
+WorkingDirectory=/home/isucon/r-isucon/webapps/java
+EnvironmentFile=/home/isucon/env.sh
+PIDFile=/home/isucon/r-isucon/webapps/java/server.pid
+
+User=isucon
+Group=isucon
+ExecStart=/bin/java -jar /home/isucon/r-isucon/webapps/java/build/libs/java-0.0.1-SNAPSHOT.jar
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target
