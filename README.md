@@ -1,5 +1,5 @@
 # r-isucon
-r-isuconです。
+Recruit Technologies が主催と準備を行って開催した、R-ISUCONです。
 
 ## ローカル環境の立ち上げ方
 
@@ -22,6 +22,10 @@ TODO: Yonashiro Nao
 ### License
 
 MIT
+
+### Portal inspired by Y!ISUCON
+
+https://github.com/yahoojapan/yisucon
 
 ### benchmark inspired by isucon7-qualify
 
