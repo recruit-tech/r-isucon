@@ -18,6 +18,9 @@ mysqlは middleware/tmp配下にデータを配置します。tmp以下の中身
 
 TODO: Yonashiro Nao
 
+### レギュレーション
+
+https://gist.github.com/yosuke-furukawa/d7c7b64ab1d1dc5ee5e65a7f7f806ab7
 
 ### License
 
