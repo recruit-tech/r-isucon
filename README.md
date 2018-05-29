@@ -22,6 +22,10 @@ TODO: Yonashiro Nao
 
 https://gist.github.com/yosuke-furukawa/d7c7b64ab1d1dc5ee5e65a7f7f806ab7
 
+### 操作マニュアル
+
+https://hackmd.io/s/Sya7gm5cG
+
 ### License
 
 MIT
