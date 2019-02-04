@@ -16,7 +16,18 @@ mysqlは middleware/tmp配下にデータを配置します。tmp以下の中身
 
 ### benchmark bootup
 
-TODO: Yonashiro Nao
+* `make data`    : resize済みの画像を生成します (pythonとimage magickに依存しています)
+* `make build`   : benchmarkerをbuildします。bin/benchにbinaryが出力されます。
+* `make run`     : bin/benchを実行します。localhost:3000に負荷をかけ始めます。
+
+top levelに存在するdocker-compose.yamlを使った一連の流れ
+```
+docker-compose up -d --build
+cd bench
+make data
+make build
+make run
+```
 
 ### レギュレーション
 

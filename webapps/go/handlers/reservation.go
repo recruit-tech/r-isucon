@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/orisano/r-isucon/webapps/go/types"
+	"github.com/recruit-tech/r-isucon/webapps/go/types"
 )
 
 func GetReservations(c echo.Context) error {

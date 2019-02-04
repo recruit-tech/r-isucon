@@ -9,7 +9,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
-	"github.com/orisano/r-isucon/webapps/go/types"
+	"github.com/recruit-tech/r-isucon/webapps/go/types"
 )
 
 func SessionMiddleware(next echo.HandlerFunc) echo.HandlerFunc {

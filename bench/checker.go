@@ -1,8 +1,6 @@
 package bench
 
 import (
-	"bench/counter"
-	"bench/urlcache"
 	"bytes"
 	"context"
 	"fmt"
@@ -19,9 +17,12 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/recruit-tech/r-isucon/bench/counter"
+	"github.com/recruit-tech/r-isucon/bench/urlcache"
 )
 
-const RisukaiAppHost = "13.230.50.148"
+const RisukaiAppHost = "localhost:3000"
 
 var (
 	RedirectAttemptedError = fmt.Errorf("redirect attempted")
@@ -120,11 +121,6 @@ func (ct *CheckerTransport) RoundTrip(req *http.Request) (*http.Response, error)
 var (
 	transport = &CheckerTransport{
 		http.DefaultTransport,
-		/*
-			&http2.Transport{
-			//MaxIdleConnsPerHost: 65536,
-			},
-		*/
 	}
 )
 
@@ -303,7 +299,7 @@ func (c *Checker) NewRequest(method, uri string, body io.Reader) (*http.Request,
 	}
 
 	if parsedURL.Scheme == "" {
-		parsedURL.Scheme = "https"
+		parsedURL.Scheme = "http"
 	}
 
 	parsedURL.Host = RisukaiAppHost
