@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/orisano/r-isucon/webapps/go/types"
+	"github.com/recruit-tech/r-isucon/webapps/go/types"
 )
 
 func GetUser(c echo.Context) error {

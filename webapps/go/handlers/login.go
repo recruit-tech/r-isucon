@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/orisano/r-isucon/webapps/go/types"
+	"github.com/recruit-tech/r-isucon/webapps/go/types"
 
 	"regexp"
 

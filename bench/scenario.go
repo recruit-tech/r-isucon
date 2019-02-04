@@ -1,7 +1,6 @@
 package bench
 
 import (
-	"bench/counter"
 	"bytes"
 	"context"
 	"fmt"
@@ -25,6 +24,8 @@ import (
 	_ "github.com/chai2010/webp"
 	"github.com/mattn/go-ciede2000"
 	"golang.org/x/net/html"
+
+	"github.com/recruit-tech/r-isucon/bench/counter"
 )
 
 type Image struct {

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"bench"
 	"flag"
+
+	"github.com/recruit-tech/r-isucon/bench"
 )
 
 var dataPath = flag.String("data", "./data", "path to data directory")

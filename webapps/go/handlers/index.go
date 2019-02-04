@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
-	"github.com/orisano/r-isucon/webapps/go/types"
+	"github.com/recruit-tech/r-isucon/webapps/go/types"
 )
 
 type RangeTime struct {

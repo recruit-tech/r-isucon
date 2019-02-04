@@ -24,7 +24,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/orisano/r-isucon/webapps/go/handlers"
+	"github.com/recruit-tech/r-isucon/webapps/go/handlers"
 )
 
 type Renderer struct {

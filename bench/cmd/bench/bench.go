@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bench"
-	"bench/counter"
 	"context"
 	"encoding/json"
 	"flag"
@@ -16,6 +14,9 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/recruit-tech/r-isucon/bench"
+	"github.com/recruit-tech/r-isucon/bench/counter"
 )
 
 var (
@@ -25,7 +26,7 @@ var (
 	loadFuncs     []loadFunc
 	loadLogs      []string
 
-	pprofPort int = 16060
+	pprofPort = 16060
 )
 
 type loadFunc func(ctx context.Context, state *bench.State) error
@@ -42,7 +43,7 @@ func choiceLoadFunc() loadFunc {
 
 func requestInitialize(targetHost string) error {
 	u, _ := url.Parse("/initialize")
-	u.Scheme = "https"
+	u.Scheme = "http"
 	u.Host = targetHost
 
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -51,7 +52,7 @@ func requestInitialize(targetHost string) error {
 	}
 
 	req.Header.Set("User-Agent", bench.UserAgent)
-	req.Host = bench.RisukaiAppHost
+	req.Host = targetHost
 
 	client := &http.Client{
 		Timeout: bench.InitializeTimeout,
