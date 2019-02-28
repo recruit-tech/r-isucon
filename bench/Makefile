@@ -14,4 +14,4 @@ vendor: Gopkg.toml Gopkg.lock
 	@touch vendor
 
 data/avatar/dx:
-	cd data; python resize.py avatar
+	cd data; python3 resize.py avatar
