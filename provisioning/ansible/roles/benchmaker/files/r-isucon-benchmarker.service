@@ -5,8 +5,8 @@ Description=r-isucon benchmarker
 Type=simple
 Nice=-20
 EnvironmentFile=/home/isucon/env.sh
-WorkingDirectory=/home/isucon/go/src/github.com/orisano/r-isucon/bench
-ExecStart=/home/isucon/go/src/github.com/orisano/r-isucon/bench/bin/worker
+WorkingDirectory=/home/isucon/go/src/github.com/recruit-tech/r-isucon/bench
+ExecStart=/home/isucon/go/src/github.com/recruit-tech/r-isucon/bench/bin/worker
 Restart=always
 LimitNOFILE=65535
 

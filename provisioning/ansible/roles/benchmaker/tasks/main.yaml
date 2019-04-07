@@ -1,7 +1,7 @@
 ---
 - name: get application
   git:
-    repo: "https://int-tt:0dfd5565bf4f60be9c67341b9b4762ff5f39e375@github.com/orisano/r-isucon"
+    repo: "https://recruit-tech/r-isucon"
     dest: /home/isucon/r-isucon
 
 - name: algon2 install
@@ -23,7 +23,7 @@
 
 - name: change mode and owner
   file:
-    path: "/home/isucon/go/src/github.com/orisano"
+    path: "/home/isucon/go/src/github.com/recruit-tech"
     state: directory
     recurse: yes
     mode: 0755
@@ -33,7 +33,7 @@
 - name: create symbolic link
   file:
     src: "/home/isucon/r-isucon"
-    dest: "/home/isucon/go/src/github.com/orisano/r-isucon"
+    dest: "/home/isucon/go/src/github.com/recruit-tech/r-isucon"
     state: link
 
 - name: change mode and owner for r-isucon
@@ -49,22 +49,22 @@
   become_user: isucon
 
 - name: dep init
-  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/bench/src && /home/isucon/go/bin/dep init
+  shell: cd /home/isucon/go/src/github.com/recruit-tech/r-isucon/bench/src && /home/isucon/go/bin/dep init
   become: yes
   become_user: isucon
 
 - name: dep ensure
-  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/bench/src && /home/isucon/go/bin/dep ensure
+  shell: cd /home/isucon/go/src/github.com/recruit-tech/r-isucon/bench/src && /home/isucon/go/bin/dep ensure
   become: yes
   become_user: isucon
 
 - name: copy webp library
-  shell: cp -rf /home/isucon/go/src/github.com/chai2010/webp/* /home/isucon/go/src/github.com/orisano/r-isucon/bench/src/vendor/github.com/chai2010/webp
+  shell: cp -rf /home/isucon/go/src/github.com/chai2010/webp/* /home/isucon/go/src/github.com/recruit-tech/r-isucon/bench/src/vendor/github.com/chai2010/webp
   become: yes
   become_user: isucon
 
 - name: build application
-  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/bench && make build
+  shell: cd /home/isucon/go/src/github.com/recruit-tech/r-isucon/bench && make build
   become: yes
   become_user: isucon
 

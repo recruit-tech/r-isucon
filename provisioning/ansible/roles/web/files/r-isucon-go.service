@@ -3,13 +3,13 @@ Description=r-isucon-go
 After=syslog.target
 
 [Service]
-WorkingDirectory=/home/isucon/go/src/github.com/orisano/r-isucon/webapps/go
+WorkingDirectory=/home/isucon/go/src/github.com/recruit-tech/r-isucon/webapps/go
 EnvironmentFile=/home/isucon/env.sh
-PIDFile=/home/isucon/go/src/github.com/orisano/r-isucon/webapps/go/server.pid
+PIDFile=/home/isucon/go/src/github.com/recruit-tech/r-isucon/webapps/go/server.pid
 
 User=isucon
 Group=isucon
-ExecStart=/home/isucon/go/src/github.com/orisano/r-isucon/webapps/go/app
+ExecStart=/home/isucon/go/src/github.com/recruit-tech/r-isucon/webapps/go/app
 ExecStop=/bin/kill -s QUIT $MAINPID
 
 [Install]

@@ -1,6 +1,6 @@
 - name: get application
   git:
-    repo: "https://int-tt:0dfd5565bf4f60be9c67341b9b4762ff5f39e375@github.com/orisano/r-isucon"
+    repo: "https://github.com/recruit-tech/r-isucon"
     dest: /home/isucon/r-isucon
 
 - name: algon2 install
@@ -69,7 +69,7 @@
 
 - name: change mode and owner
   file:
-    path: "/home/isucon/go/src/github.com/orisano"
+    path: "/home/isucon/go/src/github.com/recruit-tech"
     state: directory
     recurse: yes
     mode: 0755
@@ -79,7 +79,7 @@
 - name: create symbolic link
   file:
     src: "/home/isucon/r-isucon"
-    dest: "/home/isucon/go/src/github.com/orisano/r-isucon"
+    dest: "/home/isucon/go/src/github.com/recruit-tech/r-isucon"
     state: link
 
 - name: change mode and owner for r-isucon
@@ -91,12 +91,12 @@
 
 #TODO:シンボリックリンクが解決されてしまい、GOPATH配下と認識されなくなる
 - name: dep ensure
-  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/webapps/go && /home/isucon/go/bin/dep ensure
+  shell: cd /home/isucon/go/src/github.com/recruit-tech/r-isucon/webapps/go && /home/isucon/go/bin/dep ensure
   become: yes
   become_user: isucon
 
 - name: build application
-  shell: cd /home/isucon/go/src/github.com/orisano/r-isucon/webapps/go && go build -o app
+  shell: cd /home/isucon/go/src/github.com/recruit-tech/r-isucon/webapps/go && go build -o app
   become: yes
   become_user: isucon
 
